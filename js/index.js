@@ -1,10 +1,9 @@
-const container = document.getElementById('c-content');
+// GET THE REFERENCES
+const container = document.getElementById('c-container');
 const links = document.querySelectorAll('.nav-link');
 let url = './partials/home.html';
 
-
-loadContent(url);
-
+// CREATE THE FUNCTION THAT WILL LOAD THE REQUESTED PARTIAL
 function loadContent(urlFeed) {
     fetch(urlFeed)
         .then((response) => {
@@ -15,21 +14,27 @@ function loadContent(urlFeed) {
             container.innerHTML = data;
         })
         .catch((error) => {
-            container.innerHTML = "<p>Content could not be loaded. Please try again!</p>";
+            container.innerHTML = "<p>Sorry, content could not be loaded.</p>";
             console.error(error);
         });
 }
 
+// CALL loadContent WITH THE CURRENT VALUE OF url
+loadContent(url);
 
+// CREATE THE FUNCTION THAT WILL SELECT A PARTIAL
 function selectContent(event) {
     event.preventDefault();
-    let newUrl = this.getAttribute("href");
+    let newUrl = event.currentTarget.getAttribute("href");
+    
+    // Update active state
+    links.forEach(link => link.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    
     loadContent(newUrl);
 }
 
-// REGISTER links
+// REGISTER links FOR CLICK EVENT WITH selectContent AS EVENT HANDLER
 links.forEach((link) => {
     link.addEventListener("click", selectContent);
 });
-
-
