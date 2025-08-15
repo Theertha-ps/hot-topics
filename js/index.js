@@ -1,14 +1,11 @@
-
-// GET THE REFERENCES
 const container = document.getElementById('main-content');
 const links = document.querySelectorAll('.nav-link');
 let url = './partials/home.html';
 
-// CREATE THE FUNCTION THAT WILL LOAD THE REQUESTED PARTIAL
 
-loadContent(url);
+contentLoad(url);
 
-function loadContent(urlFeed) {
+function contentLoad(urlFeed) {
     fetch(urlFeed)
         .then((response) => {
             if (!response.ok) throw new Error("Network error");
@@ -17,23 +14,21 @@ function loadContent(urlFeed) {
         .then((data) => {
             container.innerHTML = data;
         })
-        .catch((err) => {
-            container.innerHTML = "<p>Sorry, content could not be loaded.</p>";
-            console.error(err);
+        .catch((error) => {
+            container.innerHTML = "<p>Content could not be loaded. Please try again!</p>";
+            console.error(error);
         });
 }
 
 
-
-
-// CREATE THE FUNCTION THAT WILL SELECT A PARTIAL:
-function selectContent(e) {
-    e.preventDefault();
-    let newUrl = this.getAttribute("href");
-    loadContent(newUrl);
+function selectContent(event) {
+    event.preventDefault();
+    let nUrl = this.getAttribute("href");
+    loadContent(nUrl);
 }
 
-// REGISTER links FOR CLICK EVENT WITH selectContent AS EVENT HANDLER!
+// REGISTER links
 links.forEach((link) => {
     link.addEventListener("click", selectContent);
 });
+
