@@ -1,11 +1,11 @@
-const container = document.getElementById('main-content');
+const container = document.getElementById('c-content');
 const links = document.querySelectorAll('.nav-link');
 let url = './partials/home.html';
 
 
-contentLoad(url);
+loadContent(url);
 
-function contentLoad(urlFeed) {
+function loadContent(urlFeed) {
     fetch(urlFeed)
         .then((response) => {
             if (!response.ok) throw new Error("Network error");
@@ -23,12 +23,13 @@ function contentLoad(urlFeed) {
 
 function selectContent(event) {
     event.preventDefault();
-    let nUrl = this.getAttribute("href");
-    loadContent(nUrl);
+    let newUrl = this.getAttribute("href");
+    loadContent(newUrl);
 }
 
 // REGISTER links
 links.forEach((link) => {
     link.addEventListener("click", selectContent);
 });
+
 
